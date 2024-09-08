@@ -1,4 +1,4 @@
 # Discord bot dependencies
 discord.py
-python-dotenv
+python-dotenv==1.0.0
 PyNaCl
