@@ -1,6 +1,6 @@
 # DiscordChannelArchiver
 
-DiscordChannelArchiver is a powerful Discord bot that allows server administrators to backup and manage messages from channels efficiently.
+DiscordChannelArchiver is a powerful Discord bot that allows server administrators to backup and manage messages from channels efficiently. This project is based on [DiscordBackupBot](https://github.com/PierrunoYT/DiscordBackupBot).
 
 ## Features
 
