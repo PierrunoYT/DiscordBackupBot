@@ -21,4 +21,5 @@ async def setup(bot):
 
 # Run the bot
 if __name__ == '__main__':
+    bot.loop.run_until_complete(setup(bot))
     bot.run(DISCORD_TOKEN)
