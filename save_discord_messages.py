@@ -11,10 +11,10 @@ class MessageSaver(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='save_channel')
+    @commands.command(name='backup_channel')
     @commands.has_permissions(**{REQUIRED_PERMISSION: True})
-    async def save_channel(self, ctx, channel: discord.TextChannel = None):
-        print("save_channel command called")  # Debug print
+    async def backup_channel(self, ctx, channel: discord.TextChannel = None):
+        print("backup_channel command called")  # Debug print
         if channel is None:
             channel = ctx.channel
         
@@ -33,9 +33,9 @@ class MessageSaver(commands.Cog):
         
         await ctx.send(f'Saved {len(messages)} messages from #{channel.name} to {filename}')
 
-    @commands.command(name='save_all_channels')
+    @commands.command(name='backup_server')
     @commands.has_permissions(**{REQUIRED_PERMISSION: True})
-    async def save_all_channels(self, ctx):
+    async def backup_server(self, ctx):
         if not os.path.exists(CHANNEL_MESSAGES_DIR):
             os.makedirs(CHANNEL_MESSAGES_DIR)
 
@@ -62,10 +62,10 @@ class MessageSaver(commands.Cog):
 
         await ctx.send('Finished saving messages from all accessible channels.')
 
-    @commands.command(name='list_messages')
+    @commands.command(name='list_backups')
     @commands.has_permissions(**{REQUIRED_PERMISSION: True})
-    async def list_messages(self, ctx):
-        message = "Saved message files:\n"
+    async def list_backups(self, ctx):
+        message = "Backup files:\n"
         
         if os.path.exists('discord_messages.json'):
             message += "- discord_messages.json\n"
@@ -83,5 +83,19 @@ class MessageSaver(commands.Cog):
             message = "No saved message files found."
         
         await ctx.send(message)
+
+    @commands.command(name='delete_backup')
+    @commands.has_permissions(**{REQUIRED_PERMISSION: True})
+    async def delete_backup(self, ctx, filename: str):
+        if not filename.endswith('.json'):
+            filename += '.json'
+        
+        file_path = os.path.join(CHANNEL_MESSAGES_DIR, filename)
+        
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            await ctx.send(f'Backup file {filename} has been deleted.')
+        else:
+            await ctx.send(f'Backup file {filename} not found.')
 
 # This file is now a cog and will be imported by main.py

@@ -1,7 +1,7 @@
 # Discord Bot Token
 DISCORD_TOKEN = 'YOUR_DISCORD_TOKEN_HERE'
 
-# Bot command prefix
+# Bot command prefix (used for backup_channel, backup_server, list_backups, delete_backup)
 COMMAND_PREFIX = '!'
 
 # Directory for saving channel messages
