@@ -1,4 +1,5 @@
 import discord
+import asyncio
 from discord.ext import commands
 from config import DISCORD_TOKEN, COMMAND_PREFIX
 from save_discord_messages import MessageSaver
@@ -16,10 +17,14 @@ async def on_ready():
         print(f'- {guild.name} (id: {guild.id})')
 
 # Add the MessageSaver cog
-async def setup(bot):
+async def setup():
     await bot.add_cog(MessageSaver(bot))
 
 # Run the bot
+async def main():
+    async with bot:
+        await setup()
+        await bot.start(DISCORD_TOKEN)
+
 if __name__ == '__main__':
-    bot.loop.run_until_complete(setup(bot))
-    bot.run(DISCORD_TOKEN)
+    asyncio.run(main())
