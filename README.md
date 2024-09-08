@@ -13,7 +13,7 @@ DiscordBackupBot is a powerful Discord bot designed to help server administrator
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/DiscordBackupBot.git
+   git clone https://github.com/PierrunoYT/DiscordBackupBot.git
    cd DiscordBackupBot
    ```
 2. Install the required dependencies:
