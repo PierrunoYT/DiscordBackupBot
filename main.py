@@ -1,7 +1,20 @@
-def hello():
-    "print a greeting"
+import discord
+from discord.ext import commands
+from config import DISCORD_TOKEN, COMMAND_PREFIX
+from save_discord_messages import MessageSaver
 
-    print("hello")
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'{bot.user} has connected to Discord!')
+
+async def setup():
+    await bot.add_cog(MessageSaver(bot))
 
 if __name__ == "__main__":
-    hello()
+    bot.loop.run_until_complete(setup())
+    bot.run(DISCORD_TOKEN)
