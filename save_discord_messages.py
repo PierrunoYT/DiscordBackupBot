@@ -98,4 +98,18 @@ class MessageSaver(commands.Cog):
         else:
             await ctx.send(f'Backup file {filename} not found.')
 
+    @commands.command(name='help')
+    async def help_command(self, ctx):
+        help_text = """
+        **Available Commands:**
+        
+        `!backup_channel [channel]`: Backs up messages from a specific channel (or the current channel if not specified).
+        `!backup_server`: Backs up messages from all accessible channels in the server.
+        `!list_backups`: Lists all existing backup files.
+        `!delete_backup <filename>`: Deletes a specific backup file.
+        
+        Note: All commands require administrator permissions.
+        """
+        await ctx.send(help_text)
+
 # This file is now a cog and will be imported by main.py
