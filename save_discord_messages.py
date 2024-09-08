@@ -2,20 +2,24 @@ import json
 import discord
 from discord.ext import commands
 import os
+from config import (
+    COMMAND_PREFIX, CHANNEL_MESSAGES_DIR, SINGLE_CHANNEL_FILE_FORMAT,
+    REQUIRED_PERMISSION, MESSAGE_HISTORY_LIMIT, FILE_ENCODING, JSON_INDENT
+)
 
 class MessageSaver(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name='save_channel')
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(**{REQUIRED_PERMISSION: True})
     async def save_channel(self, ctx, channel: discord.TextChannel = None):
         print("save_channel command called")  # Debug print
         if channel is None:
             channel = ctx.channel
         
         messages = []
-        async for message in channel.history(limit=None):
+        async for message in channel.history(limit=MESSAGE_HISTORY_LIMIT):
             messages.append({
                 'author': str(message.author),
                 'content': message.content,
@@ -23,22 +27,22 @@ class MessageSaver(commands.Cog):
                 'attachments': [att.url for att in message.attachments]
             })
         
-        filename = f'{channel.name}_messages.json'
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(messages, f, ensure_ascii=False, indent=4)
+        filename = SINGLE_CHANNEL_FILE_FORMAT.format(channel_name=channel.name)
+        with open(filename, 'w', encoding=FILE_ENCODING) as f:
+            json.dump(messages, f, ensure_ascii=False, indent=JSON_INDENT)
         
         await ctx.send(f'Saved {len(messages)} messages from #{channel.name} to {filename}')
 
     @commands.command(name='save_all_channels')
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(**{REQUIRED_PERMISSION: True})
     async def save_all_channels(self, ctx):
-        if not os.path.exists('channel_messages'):
-            os.makedirs('channel_messages')
+        if not os.path.exists(CHANNEL_MESSAGES_DIR):
+            os.makedirs(CHANNEL_MESSAGES_DIR)
 
         for channel in ctx.guild.text_channels:
             try:
                 messages = []
-                async for message in channel.history(limit=None):
+                async for message in channel.history(limit=MESSAGE_HISTORY_LIMIT):
                     messages.append({
                         'author': str(message.author),
                         'content': message.content,
@@ -46,9 +50,9 @@ class MessageSaver(commands.Cog):
                         'attachments': [att.url for att in message.attachments]
                     })
                 
-                filename = f'channel_messages/{channel.name}_messages.json'
-                with open(filename, 'w', encoding='utf-8') as f:
-                    json.dump(messages, f, ensure_ascii=False, indent=4)
+                filename = os.path.join(CHANNEL_MESSAGES_DIR, SINGLE_CHANNEL_FILE_FORMAT.format(channel_name=channel.name))
+                with open(filename, 'w', encoding=FILE_ENCODING) as f:
+                    json.dump(messages, f, ensure_ascii=False, indent=JSON_INDENT)
                 
                 await ctx.send(f'Saved {len(messages)} messages from #{channel.name} to {filename}')
             except discord.errors.Forbidden:
@@ -59,7 +63,7 @@ class MessageSaver(commands.Cog):
         await ctx.send('Finished saving messages from all accessible channels.')
 
     @commands.command(name='list_messages')
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(**{REQUIRED_PERMISSION: True})
     async def list_messages(self, ctx):
         message = "Saved message files:\n"
         
@@ -68,12 +72,12 @@ class MessageSaver(commands.Cog):
         else:
             message += "- discord_messages.json (not found)\n"
         
-        if os.path.exists('channel_messages'):
-            for filename in os.listdir('channel_messages'):
+        if os.path.exists(CHANNEL_MESSAGES_DIR):
+            for filename in os.listdir(CHANNEL_MESSAGES_DIR):
                 if filename.endswith('.json'):
-                    message += f"- channel_messages/{filename}\n"
+                    message += f"- {os.path.join(CHANNEL_MESSAGES_DIR, filename)}\n"
         else:
-            message += "- No channel_messages directory found\n"
+            message += f"- No {CHANNEL_MESSAGES_DIR} directory found\n"
         
         if message == "Saved message files:\n":
             message = "No saved message files found."
