@@ -10,7 +10,7 @@ bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=
 
 @bot.event
 async def on_ready():
-    print(f'{bot.user} has connected to Discord!')
+    print(f'DiscordBackupBot ({bot.user}) has connected to Discord!')
     print(f'Connected to {len(bot.guilds)} guilds:')
     for guild in bot.guilds:
         print(f'- {guild.name} (id: {guild.id})')

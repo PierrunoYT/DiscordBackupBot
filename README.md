@@ -1,6 +1,6 @@
-# DiscordChannelArchiver
+# DiscordBackupBot
 
-DiscordChannelArchiver is a powerful Discord bot that allows server administrators to backup and manage messages from channels efficiently. This project is based on [DiscordBackupBot](https://github.com/PierrunoYT/DiscordBackupBot).
+DiscordBackupBot is a powerful Discord bot that allows server administrators to backup and manage messages from channels efficiently. This project is based on the original [DiscordBackupBot](https://github.com/PierrunoYT/DiscordBackupBot) by PierrunoYT.
 
 ## Features
 
@@ -13,8 +13,8 @@ DiscordChannelArchiver is a powerful Discord bot that allows server administrato
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/DiscordChannelArchiver.git
-   cd DiscordChannelArchiver
+   git clone https://github.com/yourusername/DiscordBackupBot.git
+   cd DiscordBackupBot
    ```
 2. Install the required dependencies:
    ```
