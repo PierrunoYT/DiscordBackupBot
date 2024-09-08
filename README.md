@@ -1,6 +1,6 @@
 # DiscordBackupBot
 
-DiscordBackupBot is a powerful Discord bot that allows server administrators to backup and manage messages from channels efficiently. This project is based on the original [DiscordBackupBot](https://github.com/PierrunoYT/DiscordBackupBot) by PierrunoYT.
+DiscordBackupBot is a powerful Discord bot designed to help server administrators efficiently backup and manage channel messages. This project is an enhanced version of the original [DiscordBackupBot](https://github.com/PierrunoYT/DiscordBackupBot) created by PierrunoYT, with additional features and improvements.
 
 ## Features
 
